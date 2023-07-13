@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import ArrowLeftOutlinedIcon from "@mui/icons-material/ArrowLeftOutlined";
 import ArrowRightOutlinedIcon from "@mui/icons-material/ArrowRightOutlined";
+import { useState } from "react";
 const Container = styled.div`
   width: 100%;
   height: 100vh;
@@ -25,11 +26,14 @@ const Arrow = styled.div`
   margin: auto;
   cursor: pointer;
   opacity: 0.5;
+  z-index: 2;
 `;
 
 const Wrapper = styled.div`
   height: 100%;
   display: flex;
+  transition: all 1.2s ease;
+  transform: translateX(${(props) => props.sliderIndex * -100}vw);
 `;
 
 const Slide = styled.div`
@@ -41,7 +45,8 @@ const Slide = styled.div`
 `;
 
 const ImgContainer = styled.div`
-  margin-left: 60px;
+  margin-left: 80px;
+  margin-right: 60px;
   height: 100%;
   flex: 1;
 `;
@@ -73,12 +78,22 @@ const Button = styled.button`
 `;
 
 const Slider = () => {
+  const [sliderIndex, setSliderIndex] = useState(0);
+  const handleClick = (direction) => {
+    if (direction === "left")
+      setSliderIndex(sliderIndex > 0 ? sliderIndex - 1 : 2);
+    else {
+      setSliderIndex(sliderIndex < 2 ? sliderIndex + 1 : 0);
+    }
+  };
+
   return (
     <Container>
-      <Arrow direction="left">
+      <Arrow direction="left" onClick={() => handleClick("left")}>
         <ArrowLeftOutlinedIcon />
       </Arrow>
-      <Wrapper>
+      <Wrapper sliderIndex={sliderIndex}>
+        {/* {data&&data.map(d=><Slider></Slider>)} */}
         <Slide bg="f5fafd">
           <ImgContainer>
             <Image src="https://previews.123rf.com/images/vadymvdrobot/vadymvdrobot1710/vadymvdrobot171002629/88272910-imagen-de-cuerpo-entero-de-mujer-morena-feliz-en-vestido-y-sombrero-bailando-con-c%C3%A1mara-retro-en.jpg" />
@@ -116,7 +131,7 @@ const Slider = () => {
           </InfoContainer>
         </Slide>
       </Wrapper>
-      <Arrow direction="right">
+      <Arrow direction="right" onClick={() => handleClick("right")}>
         <ArrowRightOutlinedIcon />
       </Arrow>
     </Container>
