@@ -2,6 +2,8 @@ import styled from "styled-components";
 import ArrowLeftOutlinedIcon from "@mui/icons-material/ArrowLeftOutlined";
 import ArrowRightOutlinedIcon from "@mui/icons-material/ArrowRightOutlined";
 import { useState } from "react";
+import { sliderItems } from "../data";
+
 const Container = styled.div`
   width: 100%;
   height: 100vh;
@@ -33,7 +35,7 @@ const Wrapper = styled.div`
   height: 100%;
   display: flex;
   transition: all 1.2s ease;
-  transform: translateX(${(props) => props.sliderIndex * -100}vw);
+  transform: translateX(${(props) => props.slideindex * -100}vw);
 `;
 
 const Slide = styled.div`
@@ -78,12 +80,12 @@ const Button = styled.button`
 `;
 
 const Slider = () => {
-  const [sliderIndex, setSliderIndex] = useState(0);
+  const [slideIndex, setSlideIndex] = useState(0);
   const handleClick = (direction) => {
     if (direction === "left")
-      setSliderIndex(sliderIndex > 0 ? sliderIndex - 1 : 2);
+      setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 2);
     else {
-      setSliderIndex(sliderIndex < 2 ? sliderIndex + 1 : 0);
+      setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
     }
   };
 
@@ -92,44 +94,20 @@ const Slider = () => {
       <Arrow direction="left" onClick={() => handleClick("left")}>
         <ArrowLeftOutlinedIcon />
       </Arrow>
-      <Wrapper sliderIndex={sliderIndex}>
-        {/* {data&&data.map(d=><Slider></Slider>)} */}
-        <Slide bg="f5fafd">
-          <ImgContainer>
-            <Image src="https://previews.123rf.com/images/vadymvdrobot/vadymvdrobot1710/vadymvdrobot171002629/88272910-imagen-de-cuerpo-entero-de-mujer-morena-feliz-en-vestido-y-sombrero-bailando-con-c%C3%A1mara-retro-en.jpg" />
-          </ImgContainer>
-          <InfoContainer>
-            <Title>SUMMER SALE</Title>
-            <Description>
-              DON´T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS
-            </Description>
-            <Button>SHOW NOW</Button>
-          </InfoContainer>
-        </Slide>
-        <Slide bg="f5faf4">
-          <ImgContainer>
-            <Image src="https://previews.123rf.com/images/vadymvdrobot/vadymvdrobot1710/vadymvdrobot171002629/88272910-imagen-de-cuerpo-entero-de-mujer-morena-feliz-en-vestido-y-sombrero-bailando-con-c%C3%A1mara-retro-en.jpg" />
-          </ImgContainer>
-          <InfoContainer>
-            <Title>WINTER SALE</Title>
-            <Description>
-              DON´T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS
-            </Description>
-            <Button>SHOW NOW</Button>
-          </InfoContainer>
-        </Slide>
-        <Slide bg="f5fafd">
-          <ImgContainer>
-            <Image src="https://previews.123rf.com/images/vadymvdrobot/vadymvdrobot1710/vadymvdrobot171002629/88272910-imagen-de-cuerpo-entero-de-mujer-morena-feliz-en-vestido-y-sombrero-bailando-con-c%C3%A1mara-retro-en.jpg" />
-          </ImgContainer>
-          <InfoContainer>
-            <Title>POPULAR SALE</Title>
-            <Description>
-              DON´T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS
-            </Description>
-            <Button>SHOW NOW</Button>
-          </InfoContainer>
-        </Slide>
+      <Wrapper slideindex={slideIndex}>
+        {sliderItems &&
+          sliderItems.map((item) => (
+            <Slide bg={item.bg} key={item.id}>
+              <ImgContainer>
+                <Image src={item.img} />
+              </ImgContainer>
+              <InfoContainer>
+                <Title>{item.title}</Title>
+                <Description>{item.desc}</Description>
+                <Button>SHOW NOW</Button>
+              </InfoContainer>
+            </Slide>
+          ))}
       </Wrapper>
       <Arrow direction="right" onClick={() => handleClick("right")}>
         <ArrowRightOutlinedIcon />
