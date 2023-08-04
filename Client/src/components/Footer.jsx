@@ -9,7 +9,7 @@ import MailIcon from "@mui/icons-material/Mail";
 
 const Container = styled.div`
   display: flex;
-style={{marginLeft="10px"}} `;
+`;
 
 const Left = styled.div`
   flex: 1;
