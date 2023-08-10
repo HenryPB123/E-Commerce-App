@@ -26,7 +26,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #a2bebe;
+  background-color: #c1dfdf;
   position: relative;
 
   &:hover ${Info} {
@@ -45,8 +45,8 @@ const Container = styled.div`
 const Image = styled.img`
   height: 75%;
   z-index: 2;
-  border-radius: 5%;
-  width: 320px;
+  border-radius: 40%;
+  width: 300px;
   height: 310px;
   position: absolute;
 `;
