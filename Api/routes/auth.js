@@ -7,10 +7,7 @@ router.post("/register", async (req, res) => {
   const newUser = new User({
     username: req.body.username,
     email: req.body.email,
-    password: CryptoJS.DES.encrypt(
-      req.body.password,
-      process.env.PASS_SECRET.toString()
-    ), //encrypt the password
+    password: CryptoJS.DES.encrypt(req.body.password, process.env.PASS_SECRET), //encrypt the password
   });
 
   try {
@@ -28,17 +25,14 @@ router.post("/login", async (req, res) => {
       username: req.body.username,
     });
 
-    !user && res.status(401).json("Wrong credentials!");
+    let hashedPassword = CryptoJS.AES.decrypt(
+      user.password,
+      process.env.PASS_SECRET
+    );
 
-    const hashedPassword = CryptoJS.AES.decrypt(username.password, PASS_SECRET); //Decrypt the password
-    console.log("hhhhh", user);
+    let password = hashedPassword.words.toString();
+    console.log("aaaa", password);
 
-    const password = hashedPassword.toString(CryptoJS.enc.Utf8); //In case there is a special character
-
-    console.log("password", password);
-    !password !== req.body.password &&
-      res.status(401).json("Wrong credentials!");
-    //!ARREGLAR
     res.status(200).json(user);
   } catch (error) {
     res.status(500).json(error);
