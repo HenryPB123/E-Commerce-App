@@ -1,20 +1,29 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Pay from "./components/Pay";
+
 // import Home from "./pages/Home";
 // import ProductList from "./pages/ProductList";
 // import UnitProduct from "./pages/UnitProduct";
 // import Register from "./pages/Register";
 // import Login from "./pages/Login";
-import Cart from "./pages/Cart";
+// import Cart from "./pages/Cart";
 
 function App() {
   return (
-    <>
-      {/* <Home /> */}
-      {/* <ProductList /> */}
-      {/* <UnitProduct /> */}
-      {/* <Register /> */}
-      {/* <Login /> */}
-      <Cart />
-    </>
+    // <>
+    //   {/* <Home /> */}
+    //   {/* <ProductList /> */}
+    //   {/* <UnitProduct /> */}
+    //   {/* <Register /> */}
+    //   {/* <Login /> */}
+    //   <Cart />
+    // </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/pay" element={<Pay />} />
+        {/* <Route path="/success" element={<Success />} /> */}
+      </Routes>
+    </BrowserRouter>
   );
 }
 
