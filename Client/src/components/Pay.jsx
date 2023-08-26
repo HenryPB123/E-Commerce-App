@@ -3,7 +3,7 @@ import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const KEYPUBLICSTRIPE =
+const KEY_PUBLIC_STRIPE =
   "pk_test_51NiqbXB3Q238UXnNLHnks6ZLHHcJhQ82YCJJkqC3gWOJZIsW9Xls0hml4ykAIz8VCruCY1niai6r7VpRM1kbKJnU00rfmM6aNM";
 
 const Container = styled.div`
@@ -60,7 +60,7 @@ const Pay = () => {
         description="Your total is $20"
         amount={2000}
         token={onToken}
-        stripeKey={KEYPUBLICSTRIPE}
+        stripeKey={KEY_PUBLIC_STRIPE}
       >
         <Button>Pay Now</Button>
       </StripeCheckout>
