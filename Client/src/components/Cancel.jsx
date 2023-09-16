@@ -1,12 +1,12 @@
 import React from "react";
 
-const Success = () => {
+const Cancel = () => {
   return (
     <div>
-      <h1>Thanks for your purchase!</h1>
+      <h1>Purchase cancelled!</h1>
       <a href="/">Back to home</a>
     </div>
   );
 };
 
-export default Success;
+export default Cancel;

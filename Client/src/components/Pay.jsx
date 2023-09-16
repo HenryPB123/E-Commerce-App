@@ -5,7 +5,6 @@ import axios from "axios";
 
 const KEY_PUBLIC_STRIPE =
   "pk_test_51NiqbXB3Q238UXnNLHnks6ZLHHcJhQ82YCJJkqC3gWOJZIsW9Xls0hml4ykAIz8VCruCY1niai6r7VpRM1kbKJnU00rfmM6aNM";
-
 const Container = styled.div`
   height: 100vh;
   display: flex;
@@ -42,7 +41,7 @@ const Pay = () => {
           }
         );
         console.log(res.data);
-      } catch (error) {
+      // } catch (error) {
         console.log(error);
       }
     };
