@@ -1,6 +1,6 @@
+const dotenv = require("dotenv");
 const express = require("express");
 const mongoose = require("mongoose");
-const dotenv = require("dotenv");
 const cors = require("cors");
 //Routes
 const userRoute = require("./routes/user");
@@ -10,8 +10,9 @@ const cartRoute = require("./routes/cart");
 const orderRoute = require("./routes/order");
 const stripeRoute = require("./routes/stripe");
 
-const app = express();
 dotenv.config(); //Allows you  read variables that come from .env file
+
+const app = express();
 
 mongoose
   .connect(process.env.MONGO_URL, {

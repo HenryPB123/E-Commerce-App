@@ -27,16 +27,19 @@ export const categories = [
     id: 1,
     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMqN1Zzq5spdFqEjXF4accAe2jhwkUaD2V71woEU0wNLQ9extK_CdKrL7z-RMWv9dvAMA&usqp=CAU",
     title: "SHIRT STYLE",
+    category: "woman",
   },
   {
     id: 2,
     img: "https://media1.popsugar-assets.com/files/thumbor/2jhlq3u_u4zFKMePDZhsOZxvYCk/0x190:1500x1690/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2020/03/24/815/n/1922564/03e90c5e5e7a52810c9cf8.43185209_/i/best-loungewear-from-free-people.jpg",
     title: "LOUNGEWEAR LOVE",
+    category: "coat",
   },
   {
     id: 3,
     img: "https://image-resizing.booztcdn.com/lee-jeans/ljsl55few30_ccharcoal_v30_10.webp?has_grey=0&has_webp=0&size=w400&dpr=2.5",
     title: "LIHT JACKETS",
+    category: "jeans",
   },
 ];
 
