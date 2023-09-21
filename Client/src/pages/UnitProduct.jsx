@@ -7,6 +7,9 @@ import Newsletter from "../components/Newsletter";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { mobile } from "../Responsive";
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { publicRequest } from "../requestMetod";
 
 const Container = styled.div``;
 
@@ -76,6 +79,7 @@ const FilterTitle = styled.span`
 const FilterColor = styled.div`
   width: 20px;
   height: 20px;
+  border: gray solid 0.2px;
   border-radius: 50%;
   background-color: ${(props) => props.color};
   margin: 0px 5px;
@@ -130,6 +134,34 @@ const Button = styled.button`
 `;
 
 const UnitProduct = () => {
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+
+  const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(1);
+  const [color, setColor] = useState("");
+  const [size, setSize] = useState("");
+
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const response = await publicRequest.get(`products/find/${id}`);
+        setProduct(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getProduct();
+  }, [id]);
+
+  const handleQuantity = (type) => {
+    if (type === "dec") {
+      if (quantity > 1) setQuantity(quantity - 1);
+    } else {
+      setQuantity(quantity + 1);
+    }
+  };
+
   return (
     <Container>
       <NavBar />
@@ -137,40 +169,37 @@ const UnitProduct = () => {
 
       <Wrapper>
         <ImgContainer>
-          <Image src="https://www.plicata.com.co/wp-content/uploads/2022/03/Jeans-Roto-Mujer-Desgaste-Moda-Dama-Rigido-Plicata-scaled.gif" />
+          <Image src={product.image} />
         </ImgContainer>
         <InfoContainer>
-          <Title>New Jeans</Title>
-          <Description>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quam
-            dignissimos ipsa officia nam commodi, ipsum sapiente quo sunt dolore
-            animi doloremque, repellat veniam laboriosam aut autem nihil
-            consectetur numquam sequi.
-          </Description>
-          <Price>$ 20</Price>
+          <Title>{product.title}</Title>
+          <Description>{product.description}</Description>
+          <Price>$ {product.price}</Price>
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>
-              <FilterColor color="black"></FilterColor>
-              <FilterColor color="darkblue"></FilterColor>
-              <FilterColor color="gray"></FilterColor>
+              {product.color?.map((c, i) => (
+                <FilterColor
+                  key={c}
+                  color={c}
+                  onClick={() => setColor(c)}
+                ></FilterColor>
+              ))}
             </Filter>
             <Filter>
               <FilterTitle>Size</FilterTitle>
-              <FilterSize>
-                <FilterSizeOption>XS</FilterSizeOption>
-                <FilterSizeOption>S</FilterSizeOption>
-                <FilterSizeOption>M</FilterSizeOption>
-                <FilterSizeOption>L</FilterSizeOption>
-                <FilterSizeOption>XL</FilterSizeOption>
+              <FilterSize onChange={(e) => setColor(e.target.value)}>
+                {product.size?.map((s, i) => (
+                  <FilterSizeOption key={s}>{s.toUpperCase()}</FilterSizeOption>
+                ))}
               </FilterSize>
             </Filter>
           </FilterContainer>
           <AddContainer>
             <AmountContainer>
-              <RemoveIcon />
-              <Amount>2</Amount>
-              <AddIcon />
+              <RemoveIcon onClick={() => handleQuantity("dec")} />
+              <Amount>{quantity}</Amount>
+              <AddIcon onClick={() => handleQuantity("inc")} />
             </AmountContainer>
             <Button>ADD TO CART</Button>
           </AddContainer>
