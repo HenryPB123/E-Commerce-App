@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { categories } from "../data";
+import { categories } from "../js/data";
 import CategoryItem from "./CategoryItem";
-import { mobile } from "../Responsive";
+import { mobile } from "../js/Responsive";
 
 const Container = styled.div`
   display: flex;

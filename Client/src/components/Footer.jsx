@@ -6,7 +6,7 @@ import PinterestIcon from "@mui/icons-material/Pinterest";
 import RoomIcon from "@mui/icons-material/Room";
 import PhoneIcon from "@mui/icons-material/Phone";
 import MailIcon from "@mui/icons-material/Mail";
-import { mobile } from "../Responsive";
+import { mobile } from "../js/Responsive";
 
 const Container = styled.div`
   display: flex;

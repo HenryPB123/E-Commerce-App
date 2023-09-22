@@ -6,10 +6,12 @@ import Newsletter from "../components/Newsletter";
 // MUI
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import { mobile } from "../Responsive";
+import { mobile } from "../js/Responsive";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { publicRequest } from "../requestMetod";
+import { publicRequest } from "../js/requestMetod";
+import { addProduct } from "../redux/cartRedux";
+import { useDispatch } from "react-redux";
 
 const Container = styled.div``;
 
@@ -141,6 +143,7 @@ const UnitProduct = () => {
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getProduct = async () => {
@@ -160,6 +163,11 @@ const UnitProduct = () => {
     } else {
       setQuantity(quantity + 1);
     }
+  };
+
+  const handleClick = () => {
+    //update cart
+    dispatch(addProduct({ ...product, quantity, color, size }));
   };
 
   return (
@@ -201,7 +209,7 @@ const UnitProduct = () => {
               <Amount>{quantity}</Amount>
               <AddIcon onClick={() => handleQuantity("inc")} />
             </AmountContainer>
-            <Button>ADD TO CART</Button>
+            <Button onClick={handleClick}>ADD TO CART</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>

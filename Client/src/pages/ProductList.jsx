@@ -4,7 +4,7 @@ import Announcements from "../components/Announcements";
 import Products from "../components/Products";
 import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
-import { mobile } from "../Responsive";
+import { mobile } from "../js/Responsive";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 

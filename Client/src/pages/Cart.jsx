@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 // MUI
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import { mobile } from "../Responsive";
+import { mobile } from "../js/Responsive";
 
 const Container = styled.div``;
 

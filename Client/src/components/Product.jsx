@@ -35,14 +35,6 @@ const Container = styled.div`
   }
 `;
 
-// const Circle = styled.div`
-//   width: 330px;
-//   height: 330px;
-//   border-radius: 10%;
-//   background-color: #e4edf5e1;
-//   position: absolute;
-// `;
-
 const Image = styled.img`
   height: 75%;
   z-index: 2;
