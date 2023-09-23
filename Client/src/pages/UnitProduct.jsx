@@ -3,7 +3,7 @@ import NavBar from "../components/NavBar";
 import Announcements from "../components/Announcements";
 import Footer from "../components/Footer";
 import Newsletter from "../components/Newsletter";
-// MUI
+
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { mobile } from "../js/Responsive";
@@ -136,6 +136,7 @@ const Button = styled.button`
 `;
 
 const UnitProduct = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const id = location.pathname.split("/")[2];
 
@@ -143,7 +144,6 @@ const UnitProduct = () => {
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const getProduct = async () => {
@@ -186,7 +186,7 @@ const UnitProduct = () => {
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>
-              {product.color?.map((c, i) => (
+              {product.color?.map((c) => (
                 <FilterColor
                   key={c}
                   color={c}
@@ -196,9 +196,12 @@ const UnitProduct = () => {
             </Filter>
             <Filter>
               <FilterTitle>Size</FilterTitle>
-              <FilterSize onChange={(e) => setColor(e.target.value)}>
-                {product.size?.map((s, i) => (
-                  <FilterSizeOption key={s}>{s.toUpperCase()}</FilterSizeOption>
+
+              <FilterSize onChange={(e) => setSize(e.target.value)}>
+                {product.size?.map((s) => (
+                  <FilterSizeOption key={s} value={s.toUpperCase()}>
+                    {s.toUpperCase()}
+                  </FilterSizeOption>
                 ))}
               </FilterSize>
             </Filter>

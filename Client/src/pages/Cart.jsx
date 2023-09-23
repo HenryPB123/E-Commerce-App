@@ -2,10 +2,15 @@ import styled from "styled-components";
 import NavBar from "../components/NavBar";
 import Announcements from "../components/Announcements";
 import Footer from "../components/Footer";
-// MUI
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { mobile } from "../js/Responsive";
+import { useSelector } from "react-redux";
+import StripeCheckout from "react-stripe-checkout";
+import { useState } from "react";
+
+const KEY =
+  "pk_test_51NiqbXB3Q238UXnNLHnks6ZLHHcJhQ82YCJJkqC3gWOJZIsW9Xls0hml4ykAIz8VCruCY1niai6r7VpRM1kbKJnU00rfmM6aNM";
 
 const Container = styled.div``;
 
@@ -62,6 +67,13 @@ const Info = styled.div`
   flex: 3;
 `;
 
+const ContainerProduct = styled.div`
+  display: flex;
+  justify-content: space-between;
+  ${mobile({
+    flexDirection: "column",
+  })}
+`;
 const Product = styled.div`
   display: flex;
   justify-content: space-between;
@@ -76,7 +88,10 @@ const ProductDetail = styled.div`
 `;
 
 const Image = styled.img`
+  /* width: 250px; */
   width: 250px;
+  height: 300px;
+  object-fit: cover;
 `;
 
 const Details = styled.div`
@@ -137,6 +152,7 @@ const Hr = styled.hr`
   background-color: #eee;
   border: none;
   height: 1px;
+  margin: 2px;
 `;
 
 const Summary = styled.div`
@@ -173,6 +189,13 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
+  const cart = useSelector((state) => state.cart);
+  const [stripeToken, setStripeToken] = useState(null);
+
+  const onToken = (token) => {
+    setStripeToken(token);
+  };
+  console.log("stripeToken", stripeToken.id);
   return (
     <Container>
       <NavBar />
@@ -189,63 +212,44 @@ const Cart = () => {
         </Top>
         <Bottom>
           <Info>
-            <Product>
-              <ProductDetail>
-                <Image src="https://cdn.luegopago.com/luegopago-uploads/compressed/1000000703-2_202304284223.jpg" />
-                <Details>
-                  <ProductName>
-                    <b>Proudct:</b> JESSIE THUNDER SHOES
-                  </ProductName>
-                  <ProductId>
-                    <b>ID: </b> 21244563546
-                  </ProductId>
-                  <ProductColor color="black" />
-                  <ProductSize>
-                    <b>Size:</b> 42
-                  </ProductSize>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <AddIcon />
-                  <ProductAmount>3</ProductAmount>
-                  <RemoveIcon />
-                </ProductAmountContainer>
-                <ProductPrice>$ 300</ProductPrice>
-              </PriceDetail>
-            </Product>
-            <Hr />
-            <Product>
-              <ProductDetail>
-                <Image src="https://static2.mujerhoy.com/www/multimedia/202009/02/media/cortadas/looks-basicos-camiseta-gris-vaqueros-gracyvillarreal-koUE--739x554@MujerHoy.jpg" />
-                <Details>
-                  <ProductName>
-                    <b>Proudct:</b> T-SHIRT
-                  </ProductName>
-                  <ProductId>
-                    <b>ID: </b> 21244563548
-                  </ProductId>
-                  <ProductColor color="gray" />
-                  <ProductSize>
-                    <b>Size:</b> M
-                  </ProductSize>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <AddIcon />
-                  <ProductAmount>3</ProductAmount>
-                  <RemoveIcon />
-                </ProductAmountContainer>
-                <ProductPrice>$ 200</ProductPrice>
-              </PriceDetail>
-            </Product>
+            {cart.products?.map((p) => (
+              <ContainerProduct key={p._id}>
+                <Product key={p._id}>
+                  <ProductDetail>
+                    <Image src={p.image} />
+                    <Details>
+                      <ProductName>
+                        <b>Product:</b> {p.title}
+                      </ProductName>
+                      <ProductId>
+                        <b>ID: </b> {p._id}
+                      </ProductId>
+
+                      <ProductColor color={p.color} />
+
+                      <ProductSize>
+                        <b>Size:</b> {p.size}
+                      </ProductSize>
+                    </Details>
+                  </ProductDetail>
+                  <PriceDetail>
+                    <ProductAmountContainer>
+                      <AddIcon />
+                      <ProductAmount>{p.quantity}</ProductAmount>
+                      <RemoveIcon />
+                    </ProductAmountContainer>
+                    <ProductPrice>$ {p.price * p.quantity}</ProductPrice>
+                  </PriceDetail>
+                </Product>
+                <Hr />
+              </ContainerProduct>
+            ))}
           </Info>
           <Summary>
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ 500</SummaryItemPrice>
+              <SummaryItemPrice>$ {cart.totalPrice}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
@@ -257,9 +261,20 @@ const Cart = () => {
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>$ 500</SummaryItemPrice>
+              <SummaryItemPrice>$ {cart.totalPrice}</SummaryItemPrice>
             </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
+            <StripeCheckout
+              name="Mahedi Shop"
+              image="https://i.pinimg.com/originals/8b/e3/07/8be30733c47e09d2d59126f418dfd0a2.png"
+              billingAddress
+              shippingAddress
+              description={`Your total is $ ${cart.totalPrice}`}
+              amount={cart.totalPrice * 100}
+              token={onToken}
+              stripeKey={KEY}
+            >
+              <Button>CHECKOUT NOW</Button>
+            </StripeCheckout>
           </Summary>
         </Bottom>
       </Wrapper>
