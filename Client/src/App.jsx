@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Pay from "./components/Pay";
-import Success from "./components/Success";
 import Cancel from "./components/Cancel";
 
 import Home from "./pages/Home";
@@ -9,6 +8,7 @@ import UnitProduct from "./pages/UnitProduct";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Cart from "./pages/Cart";
+import Success from "./pages/Success";
 
 function App() {
   const user = true;
@@ -22,9 +22,9 @@ function App() {
 
         <Route path="/login" element={user ? <Home /> : <Login />} />
         <Route path="/register" element={user ? <Home /> : <Register />} />
-        {/* <Route path="/pay" element={<Pay />} />
         <Route path="/success" element={<Success />} />
-        <Route path="/cancel" element={<Cancel />} /> */}
+        <Route path="/cancel" element={<Cancel />} />
+        {/* <Route path="/pay" element={<Pay />} />*/}
       </Routes>
     </BrowserRouter>
   );
