@@ -201,22 +201,21 @@ const Cart = () => {
   useEffect(() => {
     const makeRequest = async () => {
       try {
-        const res = await userRequest.post("checkout/payment", {
+        const response = await userRequest.post("checkout/payment", {
           tokenId: stripeToken.id,
-          amount: 500,
-          products: cart,
+          amount: cart.totalPrice * 100,
         });
-        console.log("respuesta", res.data);
-        navigate("/success", {
-          stripeData: res.data,
-          products: cart,
-        });
+        response.data &&
+          navigate("/success", {
+            state: { data: response.data, products: cart, replace: true },
+          });
       } catch {
         (error) => console.log(error);
       }
     };
     stripeToken && cart.totalPrice >= 1 && makeRequest();
-  }, [stripeToken, cart.totalPrice]);
+  }, [stripeToken, cart.totalPrice, cart, navigate]);
+
   return (
     <Container>
       <NavBar />
