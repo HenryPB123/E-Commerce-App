@@ -1,8 +1,9 @@
 import "./productList.css";
 // import { DataGrid } from "@material-ui/data-grid";
-import { Grid } from "@mui/material";
 
-import { DeleteOutline } from "@mui/icons-material";
+import { DataGrid } from "@mui/x-data-grid";
+
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -51,7 +52,7 @@ export default function ProductList() {
             <Link to={"/product/" + params.row._id}>
               <button className="productListEdit">Edit</button>
             </Link>
-            <DeleteOutline
+            <DeleteOutlineIcon
               className="productListDelete"
               onClick={() => handleDelete(params.row._id)}
             />
@@ -63,7 +64,7 @@ export default function ProductList() {
 
   return (
     <div className="productList">
-      <Grid
+      <DataGrid
         rows={products}
         disableSelectionOnClick
         columns={columns}

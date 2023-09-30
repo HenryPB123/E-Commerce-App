@@ -1,6 +1,6 @@
 import "./userList.css";
-import { Grid } from "@mui/material";
-import { DeleteOutline } from "@mui/icons-material";
+import { DataGrid } from "@mui/x-data-grid";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { userRows } from "../../js/dummyData";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -48,7 +48,7 @@ export default function UserList() {
             <Link to={"/user/" + params.row.id}>
               <button className="userListEdit">Edit</button>
             </Link>
-            <DeleteOutline
+            <DeleteOutlineIcon
               className="userListDelete"
               onClick={() => handleDelete(params.row.id)}
             />
@@ -60,7 +60,7 @@ export default function UserList() {
 
   return (
     <div className="userList">
-      <Grid
+      <DataGrid
         rows={data}
         disableSelectionOnClick
         columns={columns}

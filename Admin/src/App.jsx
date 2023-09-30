@@ -9,6 +9,8 @@ import ProductList from "./pages/productList/ProductList";
 import Product from "./pages/product/Product";
 import NewProduct from "./pages/newProduct/NewProduct";
 import Home from "./pages/home/Home";
+import Login from "./pages/login/Login";
+import Sidebar from "./components/sidebar/Sidebar";
 
 function App() {
   const admin = true;
@@ -16,32 +18,31 @@ function App() {
 
   return (
     <BrowserRouter>
+      <Topbar />
+      <Sidebar />
+      <Home />
       <Routes>
-        <Route path="/" element={<Topbar />} />
+        <Route path="/login" element={<Login />} />
+
         {admin && (
           <>
-            <Route path="/" element={<Home />} />
+            {/* <div className="container"> */}
+
             <Route path="/users" element={<UserList />} />
+
             <Route path="/user/:userId" element={<User />} />
+
             <Route path="/newUser" element={<NewUser />} />
+
             <Route path="/products" element={<ProductList />} />
+
             <Route path="/product/:productId" element={<Product />} />
+
             <Route path="/newProduct" element={<NewProduct />} />
+            {/* </div> */}
           </>
         )}
       </Routes>
-
-      {/* <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/products/:category" element={<ProductList />} />
-        <Route path="/product/:id" element={<UnitProduct />} />
-        <Route path="/cart" element={<Cart />} />
-
-        <Route path="/login" element={user ? <Home /> : <Login />} />
-        <Route path="/register" element={user ? <Home /> : <Register />} />
-        <Route path="/success" element={<Success />} />
-        <Route path="/cancel" element={<Cancel />} />
-      </Routes> */}
     </BrowserRouter>
   );
 }
