@@ -4,7 +4,7 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import PublishIcon from "@mui/icons-material/Publish";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import "./user.css";
 
 export default function User() {
