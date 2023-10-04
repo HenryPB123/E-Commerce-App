@@ -9,9 +9,11 @@ export default function WidgetSm() {
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const res = await userRequest.get("users/?new=true");
-        setUsers(res.data);
-      } catch {}
+        const response = await userRequest.get("users/?new=true");
+        setUsers(response.data);
+      } catch {
+        (error) => console.log(error);
+      }
     };
     getUsers();
   }, []);
@@ -24,7 +26,7 @@ export default function WidgetSm() {
           <li className="widgetSmListItem" key={user._id}>
             <img
               src={
-                user.img ||
+                user.image ||
                 "https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif"
               }
               alt=""

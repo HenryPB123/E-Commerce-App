@@ -9,9 +9,12 @@ export default function WidgetLg() {
   useEffect(() => {
     const getOrders = async () => {
       try {
-        const res = await userRequest.get("orders");
-        setOrders(res.data);
-      } catch {}
+        const response = await userRequest.get("orders");
+        console.log(response.data);
+        setOrders(response.data);
+      } catch {
+        (error) => console.log(error);
+      }
     };
     getOrders();
   }, []);

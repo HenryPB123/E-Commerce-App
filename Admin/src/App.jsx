@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
-import { useSelector } from "react-redux";
 import Topbar from "./components/topbar/Topbar";
 import UserList from "./pages/userList/UserList";
 import User from "./pages/user/User";
@@ -13,34 +12,36 @@ import Login from "./pages/login/Login";
 import Sidebar from "./components/sidebar/Sidebar";
 
 function App() {
-  const admin = useSelector((state) => state.user.currentUser.isAdmin);
+  const admin = JSON.parse(
+    JSON.parse(localStorage.getItem("persist:root")).user
+  ).currentUser.isAdmin;
 
+  console.log("admin", admin);
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        {admin && (
-          <>
-            {/* <Route path="/*" element={<Dashboard />}> */}
-            <Route path="/*" element={<Home />}>
-              <Route path="" element={<Topbar />} />
-              <Route path="" element={<Sidebar />} />
-              <Route path="users" element={<UserList />} />
-
-              <Route path="user/:userId" element={<User />} />
-
-              <Route path="newUser" element={<NewUser />} />
-
-              <Route path="products" element={<ProductList />} />
-
-              <Route path="product/:productId" element={<Product />} />
-
-              <Route path="newProduct" element={<NewProduct />} />
-            </Route>
-            {/* </Route> */}
-          </>
-        )}
       </Routes>
+      {admin && (
+        <>
+          <Topbar />
+          <div className="container">
+            <Sidebar />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/users" element={<UserList />} />
+
+              <Route path="/newUser" element={<NewUser />} />
+
+              <Route path="/products" element={<ProductList />} />
+              <Route path="/newProduct" element={<NewProduct />} />
+              <Route path="/user/:userId" element={<User />} />
+
+              <Route path="/product/:productId" element={<Product />} />
+            </Routes>
+          </div>
+        </>
+      )}
     </BrowserRouter>
   );
 }
