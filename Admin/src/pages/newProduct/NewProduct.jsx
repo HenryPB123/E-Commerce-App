@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 export default function NewProduct() {
   const [inputs, setInputs] = useState({});
   const [file, setFile] = useState(null);
-  const [cat, setCat] = useState([]);
+  const [categories, setCategories] = useState([]);
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -21,8 +21,9 @@ export default function NewProduct() {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
-  const handleCat = (e) => {
-    setCat(e.target.value.split(","));
+
+  const handleCategories = (e) => {
+    setCategories(e.target.value.split(","));
   };
 
   const handleClick = (e) => {
@@ -61,7 +62,11 @@ export default function NewProduct() {
         // Handle successful uploads on complete
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          const product = { ...inputs, img: downloadURL, categories: cat };
+          const product = {
+            ...inputs,
+            img: downloadURL,
+            categories: categories,
+          };
           addProduct(product, dispatch);
         });
       }
@@ -92,7 +97,7 @@ export default function NewProduct() {
         <div className="addProductItem">
           <label>Description</label>
           <input
-            name="desc"
+            name="description"
             type="text"
             placeholder="description..."
             onChange={handleChange}
@@ -109,7 +114,11 @@ export default function NewProduct() {
         </div>
         <div className="addProductItem">
           <label>Categories</label>
-          <input type="text" placeholder="jeans,skirts" onChange={handleCat} />
+          <input
+            type="text"
+            placeholder="jeans,skirts"
+            onChange={handleCategories}
+          />
         </div>
         <div className="addProductItem">
           <label>Stock</label>

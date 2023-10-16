@@ -1,5 +1,4 @@
 import "./productList.css";
-// import { DataGrid } from "@material-ui/data-grid";
 
 import { DataGrid } from "@mui/x-data-grid";
 
@@ -11,7 +10,7 @@ import { deleteProduct, getProducts } from "../../redux/apiCalls";
 
 export default function ProductList() {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.product.products);
+  const products = useSelector((state) => state.products.products);
 
   useEffect(() => {
     getProducts(dispatch);
@@ -30,7 +29,7 @@ export default function ProductList() {
       renderCell: (params) => {
         return (
           <div className="productListItem">
-            <img className="productListImg" src={params.row.img} alt="" />
+            <img className="productListImg" src={params.row.image} alt="img" />
             {params.row.title}
           </div>
         );

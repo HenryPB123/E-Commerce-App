@@ -16,12 +16,14 @@ function App() {
     JSON.parse(localStorage.getItem("persist:root")).user
   ).currentUser.isAdmin;
 
-  console.log("admin", admin);
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-      </Routes>
+      {admin === false && (
+        <Routes>
+          <Route path="/" element={<Login />} />
+        </Routes>
+      )}
+
       {admin && (
         <>
           <Topbar />

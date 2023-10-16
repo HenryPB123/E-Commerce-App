@@ -10,10 +10,10 @@ import { userRequest } from "../../js/requestMethods";
 export default function Product() {
   const location = useLocation();
   const productId = location.pathname.split("/")[2];
-  const [pStats, setPStats] = useState([]);
+  const [productStats, setProductStats] = useState([]);
 
   const product = useSelector((state) =>
-    state.product.products.find((product) => product._id === productId)
+    state.products.products.find((product) => product._id === productId)
   );
 
   const MONTHS = useMemo(
@@ -37,12 +37,14 @@ export default function Product() {
   useEffect(() => {
     const getStats = async () => {
       try {
-        const res = await userRequest.get("orders/income?pid=" + productId);
-        const list = res.data.sort((a, b) => {
+        const response = await userRequest.get(
+          "orders/income?pid=" + productId
+        );
+        const list = response.data.sort((a, b) => {
           return a._id - b._id;
         });
         list.map((item) =>
-          setPStats((prev) => [
+          setProductStats((prev) => [
             ...prev,
             { name: MONTHS[item._id - 1], Sales: item.total },
           ])
@@ -64,11 +66,15 @@ export default function Product() {
       </div>
       <div className="productTop">
         <div className="productTopLeft">
-          <Chart data={pStats} dataKey="Sales" title="Sales Performance" />
+          <Chart
+            data={productStats}
+            dataKey="Sales"
+            title="Sales Performance"
+          />
         </div>
         <div className="productTopRight">
           <div className="productInfoTop">
-            <img src={product.img} alt="" className="productInfoImg" />
+            <img src={product.image} alt="img" className="productInfoImg" />
             <span className="productName">{product.title}</span>
           </div>
           <div className="productInfoBottom">
@@ -104,8 +110,8 @@ export default function Product() {
           </div>
           <div className="productFormRight">
             <div className="productUpload">
-              <img src={product.img} alt="" className="productUploadImg" />
-              <label for="file">
+              <img src={product.image} alt="" className="productUploadImg" />
+              <label htmlFor="file">
                 <PublishIcon />
               </label>
               <input type="file" id="file" style={{ display: "none" }} />
