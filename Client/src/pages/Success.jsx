@@ -3,42 +3,55 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { userRequest } from "../js/requestMetod";
 import styled from "styled-components";
-
+import { Link } from "react-router-dom";
 const Container = styled.div`
-  height: "100vh";
-  display: "flex";
-  flex-direction: "column";
-  align-items: "center";
-  justify-content: "center";
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Message = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  margin-bottom: 50px;
+  text-align: center;
+  line-height: 60px;
 `;
 
 const Button = styled.button`
-  padding: 10;
+  font-size: 30px;
+  padding: 20px;
   margin-top: 20;
+  border: 1px solid gray;
+  border-radius: 20px;
 `;
 
 const Success = () => {
   const location = useLocation();
   //in Cart.jsx I sent data and cart. Please check that page for the changes.(in video it's only data)
-  console.log("locationnnnn", location.state.data);
   const data = location.state.data;
-  const cart = location.state.cart;
+  // const cart = location.state.cart;
+  const cart = location.state.products;
   const currentUser = useSelector((state) => state.user.currentUser);
   const [orderId, setOrderId] = useState(null);
-
   useEffect(() => {
     const createOrder = async () => {
       try {
-        const res = await userRequest.post("/orders", {
+        const response = await userRequest.post("orders", {
           userId: currentUser._id,
           products: cart.products.map((item) => ({
             productId: item._id,
             quantity: item._quantity,
           })),
-          amount: cart.total,
+          amount: cart.totalPrice,
           address: data.billing_details.address,
         });
-        setOrderId(res.data._id);
+
+        setOrderId(response.data._id);
       } catch {
         (error) => console.log(error);
       }
@@ -48,10 +61,16 @@ const Success = () => {
 
   return (
     <Container>
-      {orderId
-        ? `Order has been created successfully. Your order number is ${orderId}`
-        : `Successfull. Your order is being prepared...`}
-      <Button>Go to Homepage</Button>
+      {orderId ? (
+        <Message>
+          Order has been created successfully. Your order number is: {orderId}
+        </Message>
+      ) : (
+        <Message>Successfull. Your order is being prepared...</Message>
+      )}
+      <Link to={"/"}>
+        <Button>Go to Homepage</Button>
+      </Link>
     </Container>
   );
 };

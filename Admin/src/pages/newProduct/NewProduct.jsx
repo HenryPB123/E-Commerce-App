@@ -18,7 +18,9 @@ export default function NewProduct() {
 
   const handleChange = (e) => {
     setInputs((prev) => {
-      return { ...prev, [e.target.name]: e.target.value };
+      if (e.target.name === "price") {
+        return { ...prev, [e.target.name]: parseInt(e.target.value) };
+      } else return { ...prev, [e.target.name]: e.target.value };
     });
   };
 
@@ -64,7 +66,7 @@ export default function NewProduct() {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           const product = {
             ...inputs,
-            img: downloadURL,
+            image: downloadURL,
             categories: categories,
           };
           addProduct(product, dispatch);
